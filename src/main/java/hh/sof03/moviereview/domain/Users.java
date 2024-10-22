@@ -2,6 +2,8 @@ package hh.sof03.moviereview.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,25 +12,26 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long user_id;
 
     private String username;
     private String email;
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    //@JsonIgnoreProperties("user")
     private List<Review> reviews;
 
     // Parameterless constructor
-    public User() {
+    public Users() {
     }
 
     // Constructor
-    public User(String username, String email, String password) {
+    public Users(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -36,12 +39,12 @@ public class User {
 
     // Getters and Setters
 
-    public long getId() {
-        return id;
+    public long getUser_id() {
+        return user_id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUser_id(long id) {
+        this.user_id = id;
     }
 
     public String getUsername() {

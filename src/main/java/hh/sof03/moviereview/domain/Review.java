@@ -2,6 +2,8 @@ package hh.sof03.moviereview.domain;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,18 +16,20 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long review_id;
 
     private String text;
     private Integer points;
     private LocalDateTime time;
     
     @ManyToOne
-    @JoinColumn(name="userid")
-    private User user;
+    //@JsonIgnoreProperties("reviews")
+    @JoinColumn(name="user_id")
+    private Users user;
 
     @ManyToOne
-    @JoinColumn(name="movieid")
+    //@JsonIgnoreProperties("reviews")
+    @JoinColumn(name="movie_id")
     private Movie movie;
 
     // Parameterless constructor
@@ -33,7 +37,7 @@ public class Review {
     }
 
     // Constructor
-    public Review(String text, Integer points, LocalDateTime time, User user, Movie movie) {
+    public Review(String text, Integer points, LocalDateTime time, Users user, Movie movie) {
         this.text = text;
         this.points = points;
         this.time = time;
@@ -43,12 +47,12 @@ public class Review {
 
      // Getters and Setters
 
-    public long getId() {
-        return id;
+    public long getReview_id() {
+        return review_id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setReview_id(long id) {
+        this.review_id = id;
     }
 
     public String getText() {
@@ -75,11 +79,11 @@ public class Review {
         this.time = time;
     }
 
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 

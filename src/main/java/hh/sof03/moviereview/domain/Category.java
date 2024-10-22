@@ -2,6 +2,8 @@ package hh.sof03.moviereview.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,11 +16,12 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long category_id;
 
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    //@JsonIgnoreProperties("category")
     private List<Movie> movies;
 
     // Parameterless constructor
@@ -32,12 +35,12 @@ public class Category {
 
      // Getters and Setters
      
-    public long getId() {
-        return id;
+    public long getCategory_id() {
+        return category_id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setCategory_id(long id) {
+        this.category_id = id;
     }
 
     public String getName() {
