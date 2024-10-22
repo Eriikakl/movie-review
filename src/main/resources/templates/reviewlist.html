@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" 
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Reviews</title>
+</head>
+<body>
+    <h1>Reviews</h1>
+    <nav>
+        <ul>
+            <li><a th:href="@{/movielist}">Movies</a></li>
+            <li><a th:href="@{/reviewlist}">Reviews</a></li>
+            <li><a th:href="@{/userprofile}">Profile</a></li>
+        </ul>
+    </nav>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Time</th>
+            <th>Review</th>
+            <th>Points</th>
+            <th>Movie</th>
+            <th>User</th>
+        </tr>
+            <tr th:each="review : ${reviews}">
+                <td th:text="${review.time}"></td>    
+                <td th:text="${review.text}"></td>
+                <td th:text="${review.points}"></td>
+                <td th:text="${review.Movie} ? ${review.Movie.title} : '  '"></td>
+                <td th:text="${review.User} ? ${review.User.username} : '  '"></td>
+                <td><a class="btn btn-danger" th:href="@{/delete/{id}(id=${review.review_id})}">Delete</a></td>
+            </tr>
+    </table>
+    <a class="btn btn-success" href="/addreview">Add Review</a>
+    
+</body>
+</html>

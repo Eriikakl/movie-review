@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" 
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Reviews</title>
+</head>
+<body>
+    <div>
+        <h2>Add Review</h2>
+        <div>
+            <form th:object="${review}" th:action="@{/savereview}" action="#" method="post">
+                <label for="name">Review</label>
+                    <input type="text" id="text" th:field="*{text}">
+                <label for="name">Points</label>
+                    <input type="text" id="points" th:field="*{points}">
+                <label for="Movie">Movie</label>
+                    <select th:field="*{movie}">
+                        <option 
+                        th:each="movie : ${movies}"
+                        th:value="${movie.movie_id}"
+                        th:text="${movie.title}"></option>
+                    </select><br><br>
+                <input type="submit" value="Save">
+                </form>
+        </div>
+    </div>
+   
+    
+</body>
+</html>

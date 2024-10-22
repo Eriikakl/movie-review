@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" 
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Reviews</title>
+</head>
+<body>
+    <h1>Movies</h1>
+    <nav>
+        <ul>
+            <li><a th:href="@{/movielist}">Movies</a></li>
+            <li><a th:href="@{/reviewlist}">Reviews</a></li>
+            <li><a th:href="@{/userprofile}">Profile</a></li>
+        </ul>
+    </nav>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Release year</th>
+            <th>Category</th>
+        </tr>
+            <tr th:each="movie : ${movies}">
+                <td th:text="${movie.title}"></td>    
+                <td th:text="${movie.release_year}"></td>
+                <td th:text="${movie.Category} ? ${movie.Category.name} : '  '"></td>
+            </tr>
+    </table>
+    
+</body>
+</html>
