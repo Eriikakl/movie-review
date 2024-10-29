@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import hh.sof03.moviereview.domain.Category;
 import hh.sof03.moviereview.domain.User;
 import hh.sof03.moviereview.domain.UserRepository;
 
@@ -35,16 +37,30 @@ public class UserRestController {
     // Get user by id
     // http://localhost:8080/api/users/1
     @GetMapping("/users/{id}")
-    public @ResponseBody Optional<User> getUserById(@PathVariable("id") Long userid) {
-
-        return urepository.findById(userid);
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long userid) {
+        Optional<User> user = urepository.findById(userid);
+        return user.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // New user
     // http://localhost:8080/api/users
     @PostMapping("/users")
-    public @ResponseBody User newUser(@RequestBody User user) {
-        return urepository.save(user);
+    public ResponseEntity<User> newUser(@RequestBody User user) {
+        if (user.getUsername() == null || user.getUsername().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (user.getPassword() == null || user.getPassword().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (user.getRole() == null || user.getRole().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(urepository.save(user));
     }
 
     // Delete user

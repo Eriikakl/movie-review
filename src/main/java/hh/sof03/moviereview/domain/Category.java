@@ -1,6 +1,7 @@
 package hh.sof03.moviereview.domain;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -17,12 +18,12 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long category_id;
-
+    
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     @JsonIgnoreProperties("category")
-    private List<Movie> movies;
+    private List<Movie> movies = new ArrayList<>();
 
     // Parameterless constructor
     public Category() {

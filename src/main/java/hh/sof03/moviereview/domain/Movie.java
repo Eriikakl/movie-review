@@ -1,6 +1,7 @@
 package hh.sof03.moviereview.domain;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -30,7 +31,7 @@ public class Movie {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
     @JsonIgnoreProperties("movie")
-    private List<Review> reviews;
+    private List<Review> reviews = new ArrayList<>();
 
     // Parameterless constructor
     public Movie() {
