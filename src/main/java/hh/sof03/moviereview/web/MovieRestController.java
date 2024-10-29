@@ -48,6 +48,7 @@ public class MovieRestController {
     }
 
     // Delete movie
+    // http://localhost:8080/api/movies/1
     @DeleteMapping("/movies/{id}")
     public ResponseEntity<Void> deleteMovieById(@PathVariable("id") Long id) {
         mrepository.deleteById(id);
