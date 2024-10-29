@@ -30,7 +30,7 @@ public class User {
     private String role;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    //@JsonIgnoreProperties("user")
+    @JsonIgnoreProperties("user")
     private List<Review> reviews;
 
     // Parameterless constructor

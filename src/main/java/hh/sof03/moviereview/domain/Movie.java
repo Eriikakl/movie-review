@@ -24,12 +24,12 @@ public class Movie {
     private String release_year;
 
     @ManyToOne
-    //@JsonIgnoreProperties("movies")
+    @JsonIgnoreProperties("movies")
     @JoinColumn(name="category_id")
     private Category category;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
-    //@JsonIgnoreProperties("movie")
+    @JsonIgnoreProperties("movie")
     private List<Review> reviews;
 
     // Parameterless constructor

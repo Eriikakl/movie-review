@@ -23,12 +23,12 @@ public class Review {
     private LocalDateTime time;
     
     @ManyToOne
-    //@JsonIgnoreProperties("reviews")
+    @JsonIgnoreProperties("reviews")
     @JoinColumn(name="user_id")
     private User user;
 
     @ManyToOne
-    //@JsonIgnoreProperties("reviews")
+    @JsonIgnoreProperties("reviews")
     @JoinColumn(name="movie_id")
     private Movie movie;
 
