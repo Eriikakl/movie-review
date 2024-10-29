@@ -5,36 +5,44 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
-@Entity
-public class Users {
+@Entity(name="users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false, updatable = false)
     private long user_id;
 
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password", nullable = false)
     private String password;
+    @Column(name = "role", nullable = false)
+    private String role;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     //@JsonIgnoreProperties("user")
     private List<Review> reviews;
 
     // Parameterless constructor
-    public Users() {
+    public User() {
     }
 
     // Constructor
-    public Users(String username, String email, String password) {
+    public User(String username, String email, String password, String role) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     // Getters and Setters
@@ -79,11 +87,22 @@ public class Users {
         this.reviews = reviews;
     }
 
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
+
     // ToString without id and reviews list
     @Override
     public String toString() {
-        return "User [username=" + username + ", email=" + email + ", password=" + password + "]";
+        return "User [username=" + username + ", email=" + email + ", password=" + password + ", role=" + role + "]";
     }
+
 
     
 
