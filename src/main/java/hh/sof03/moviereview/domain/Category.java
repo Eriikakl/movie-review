@@ -21,7 +21,7 @@ public class Category {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    //@JsonIgnoreProperties("category")
+    @JsonIgnoreProperties("category")
     private List<Movie> movies;
 
     // Parameterless constructor

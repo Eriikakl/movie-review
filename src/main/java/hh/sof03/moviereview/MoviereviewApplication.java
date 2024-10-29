@@ -16,8 +16,8 @@ import hh.sof03.moviereview.domain.Movie;
 import hh.sof03.moviereview.domain.MovieRepository;
 import hh.sof03.moviereview.domain.Review;
 import hh.sof03.moviereview.domain.ReviewRepository;
-import hh.sof03.moviereview.domain.Users;
-import hh.sof03.moviereview.domain.UsersRepository;
+import hh.sof03.moviereview.domain.User;
+import hh.sof03.moviereview.domain.UserRepository;
 
 @SpringBootApplication
 public class MoviereviewApplication {
@@ -29,7 +29,7 @@ public class MoviereviewApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(CategoryRepository crepository, MovieRepository mrepository, ReviewRepository rrepository, UsersRepository urepository) {
+	public CommandLineRunner demo(CategoryRepository crepository, MovieRepository mrepository, ReviewRepository rrepository, UserRepository urepository) {
 		return (args) -> {
 
 			LocalDateTime time = LocalDateTime.now();
@@ -37,7 +37,7 @@ public class MoviereviewApplication {
 			crepository.save(category1);
 			Movie movie1 = new Movie("Moulin Rouge!", "2001", category1);
 			mrepository.save(movie1);
-			Users user1 = new Users("tunnus123", "email@email.com", "salanasana");
+			User user1 = new User("tunnus123", "email@email.com", "salanasana", "ADMIN");
 			urepository.save(user1);
 			Review review1 = new Review("hyvä elokuva!!", 5, time, user1, movie1);
 			rrepository.save(review1); 
@@ -51,7 +51,7 @@ public class MoviereviewApplication {
 				log.info(movie.toString());
 			}
 			log.info("fetch all the users");
-			for (Users user: urepository.findAll()) {
+			for (User user: urepository.findAll()) {
 				log.info(user.toString());
 			}
 			log.info("fetch all the reviews");

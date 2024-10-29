@@ -23,12 +23,12 @@ public class Review {
     private LocalDateTime time;
     
     @ManyToOne
-    //@JsonIgnoreProperties("reviews")
+    @JsonIgnoreProperties("reviews")
     @JoinColumn(name="user_id")
-    private Users user;
+    private User user;
 
     @ManyToOne
-    //@JsonIgnoreProperties("reviews")
+    @JsonIgnoreProperties("reviews")
     @JoinColumn(name="movie_id")
     private Movie movie;
 
@@ -37,7 +37,7 @@ public class Review {
     }
 
     // Constructor
-    public Review(String text, Integer points, LocalDateTime time, Users user, Movie movie) {
+    public Review(String text, Integer points, LocalDateTime time, User user, Movie movie) {
         this.text = text;
         this.points = points;
         this.time = time;
@@ -79,11 +79,11 @@ public class Review {
         this.time = time;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
