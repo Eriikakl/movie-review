@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import hh.sof03.moviereview.domain.Category;
@@ -72,5 +72,30 @@ public class MovieRestController {
     public ResponseEntity<Void> deleteMovieById(@PathVariable("id") Long id) {
         mrepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // Edit movie
+    // http://localhost:8080/api/movies/1
+    @PatchMapping("movies/{id}")
+    public ResponseEntity<Movie> editMovie(@PathVariable("id") Long id, @RequestBody Movie editMovie) {
+        Optional<Movie> movie = mrepository.findById(id);
+
+        if (movie.isPresent()) {
+            Movie oldMovie = movie.get();
+
+            if (editMovie.getTitle() != null) {
+                oldMovie.setTitle(editMovie.getTitle());
+            }
+            if (editMovie.getRelease_year() != null) {
+                oldMovie.setRelease_year(editMovie.getRelease_year());
+            }
+            if (editMovie.getCategory() != null) {
+                oldMovie.setCategory(editMovie.getCategory());
+            }
+            mrepository.save(oldMovie);
+            return ResponseEntity.ok(oldMovie);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

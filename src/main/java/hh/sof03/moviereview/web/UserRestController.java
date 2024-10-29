@@ -8,14 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import hh.sof03.moviereview.domain.Category;
 import hh.sof03.moviereview.domain.User;
 import hh.sof03.moviereview.domain.UserRepository;
 
@@ -69,6 +68,34 @@ public class UserRestController {
     public ResponseEntity<Void> deleteUserById(@PathVariable("id") Long id) {
         urepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // Edit User
+    // http://localhost:8080/api/users/1
+    @PatchMapping("users/{id}")
+    public ResponseEntity<User> editUser(@PathVariable("id") Long id, @RequestBody User editUser) {
+        Optional<User> user = urepository.findById(id);
+
+        if (user.isPresent()) {
+            User oldUser = user.get();
+
+            if (editUser.getUsername() != null) {
+                oldUser.setUsername(editUser.getUsername());
+            }
+            if (editUser.getEmail() != null) {
+                oldUser.setEmail(editUser.getEmail());
+            }
+            if (editUser.getPassword() != null) {
+                oldUser.setPassword(editUser.getPassword());
+            }
+            if (editUser.getRole() != null) {
+                oldUser.setRole(editUser.getRole());
+            }
+            urepository.save(oldUser);
+            return ResponseEntity.ok(oldUser);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

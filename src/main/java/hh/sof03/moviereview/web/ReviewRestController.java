@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -84,4 +85,28 @@ public class ReviewRestController {
         return ResponseEntity.noContent().build();
     }
 
+    // Edit review
+    // http://localhost:8080/api/reviews/1
+    @PatchMapping("reviews/{id}")
+    public ResponseEntity<Review> editReview(@PathVariable("id") Long id, @RequestBody Review editReview) {
+        Optional<Review> review = rrepository.findById(id);
+
+        if (review.isPresent()) {
+            Review oldReview = review.get();
+
+            if (editReview.getText() != null) {
+                oldReview.setText(editReview.getText());
+            }
+            if (editReview.getPoints() != null) {
+                oldReview.setPoints(editReview.getPoints());
+            }
+            if (editReview.getTime() != null) {
+                oldReview.setTime(LocalDateTime.now());
+            }
+            rrepository.save(oldReview);
+            return ResponseEntity.ok(oldReview);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

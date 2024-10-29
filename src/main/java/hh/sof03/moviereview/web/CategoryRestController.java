@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,6 +59,26 @@ public class CategoryRestController {
     public ResponseEntity<Void> deleteCategoryById(@PathVariable("id") Long id) {
         crepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // Edit Category
+    // // http://localhost:8080/api/categories/1
+    @PatchMapping("/categories/{id}")
+    public ResponseEntity<Category> editCategory(@PathVariable("id") Long id, @RequestBody Category editCategory) {
+        Optional<Category> category = crepository.findById(id);
+
+        if (category.isPresent()) {
+            Category oldCategory = category.get();
+
+            if (editCategory.getName() != null) {
+                oldCategory.setName(editCategory.getName());
+            }
+
+            crepository.save(oldCategory);
+            return ResponseEntity.ok(oldCategory);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
