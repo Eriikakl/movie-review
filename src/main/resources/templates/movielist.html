@@ -6,7 +6,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Reviews</title>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+    </style>
 </head>
+
 
 <body>
     <h1>Movies</h1>
@@ -30,13 +37,17 @@
             <th>Title</th>
             <th>Release year</th>
             <th>Category</th>
+            <th sec:authorize="hasAuthority('ADMIN')"> </th>
         </tr>
         <tr th:each="movie : ${movies}">
             <td th:text="${movie.title}"></td>
             <td th:text="${movie.release_year}"></td>
             <td th:text="${movie.Category} ? ${movie.Category.name} : '  '"></td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger"
+                    th:href="@{/deletemovie/{id}(id=${movie.movie_id})}">Delete</a></td>
         </tr>
     </table>
+    <a class="btn btn-success" href="/addmovie" sec:authorize="hasAuthority('ADMIN')">Add Movie</a>
 
 </body>
 
