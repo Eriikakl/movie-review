@@ -2,19 +2,40 @@
 <html lang="en" 
     xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Reviews</title>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .add-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .add-title {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div>
-        <h2>Add Review</h2>
-        <div>
+        <h2 class="add-title">Add Review</h2>
+        <div class="add-container">
             <form th:object="${review}" th:action="@{/savereview}" action="#" method="post">
                 <label for="name">Review</label>
-                    <input type="text" id="text" th:field="*{text}">
+                    <input type="text" id="text" th:field="*{text}"><br>
                 <label for="name">Points</label>
-                    <input type="text" id="points" th:field="*{points}">
+                    <input type="text" id="points" th:field="*{points}"> <br>
                 <label for="Movie">Movie</label>
                     <select th:field="*{movie}">
                         <option 
