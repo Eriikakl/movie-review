@@ -11,15 +11,17 @@
 <body>
     <h1>Movies</h1>
 
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out" class="btn btn-sm btn-danger" />
-    </form>
+
 
     <nav>
         <ul class="nav nav-tabs">
             <li class="nav-item"><a class="nav-link active" th:href="@{/movielist}">Movies</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{/reviewlist}">Reviews</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/userprofile}" sec:authorize="isAuthenticated()">Profile</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/userprofile}"
+                    sec:authorize="isAuthenticated()">Profile</a></li>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Sign Out" class="btn btn-sm btn-danger" />
+            </form>
         </ul>
     </nav>
 
