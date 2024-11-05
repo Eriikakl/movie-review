@@ -9,14 +9,16 @@
 </head>
 
 <body>
-    <h1>Reviews</h1>
+    <h1>User profile</h1>
     <nav>
         <ul>
             <li><a th:href="@{/movielist}">Movies</a></li>
             <li><a th:href="@{/reviewlist}">Reviews</a></li>
-            <li><a th:href="@{/userprofile}">Profile</a></li>
+            <li><a th:href="@{/userprofile}" sec:authorize="isAuthenticated()">Profile</a></li>
         </ul>
     </nav>
+
+    <p>Hello, <span sec:authentication="name"></span></p>
 
     <table class="table table-striped">
         <tr>
@@ -25,7 +27,7 @@
             <th>Points</th>
             <th>Movie</th>
             <th>User</th>
-            <th sec:authorize="hasAuthority('ADMIN')"> </th>
+
         </tr>
         <tr th:each="review : ${reviews}">
             <td th:text="${review.time}"></td>
@@ -33,12 +35,10 @@
             <td th:text="${review.points}"></td>
             <td th:text="${review.Movie} ? ${review.Movie.title} : '  '"></td>
             <td th:text="${review.User} ? ${review.User.username} : '  '"></td>
-            <td sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger"
+            <td th:if="${review.User.username == username}"><a class="btn btn-danger"
                     th:href="@{/delete/{id}(id=${review.review_id})}">Delete</a></td>
         </tr>
     </table>
-    <a class="btn btn-success" href="/addreview">Add Review</a>
-
 </body>
 
 </html>
