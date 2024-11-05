@@ -37,8 +37,10 @@ public class MoviereviewApplication {
 			crepository.save(category1);
 			Movie movie1 = new Movie("Moulin Rouge!", "2001", category1);
 			mrepository.save(movie1);
-			User user1 = new User("tunnus123", "email@email.com", "salanasana", "ADMIN");
+			User user1 = new User("admin123", "admin@email.com", "$2a$10$f7Etycg4IlnKvVzQGDZg4.YbGU5DQLo.m6muBzzdmO4yF.OJEDKJe", "ADMIN");
 			urepository.save(user1);
+			User user2 = new User("user123", "user@email.com", "$2a$10$DSmRsvZjOlGLSrE5tslcM.pm.JEo9uFXfPQSVi6GUVVd0j0tWmW3K", "USER");
+			urepository.save(user2);
 			Review review1 = new Review("hyvä elokuva!!", 5, time, user1, movie1);
 			rrepository.save(review1); 
 
