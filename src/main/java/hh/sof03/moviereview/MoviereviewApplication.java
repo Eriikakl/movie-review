@@ -35,7 +35,11 @@ public class MoviereviewApplication {
 			LocalDateTime time = LocalDateTime.now();
 			Category category1 = new Category("comedy");
 			crepository.save(category1);
-			Movie movie1 = new Movie("Moulin Rouge!", "2001", category1);
+			Category category2 = new Category("horror");
+			crepository.save(category2);
+			Category category3 = new Category("musical");
+			crepository.save(category3);
+			Movie movie1 = new Movie("Moulin Rouge!", "2001", category3);
 			mrepository.save(movie1);
 			User user1 = new User("admin123", "admin@email.com", "$2a$10$f7Etycg4IlnKvVzQGDZg4.YbGU5DQLo.m6muBzzdmO4yF.OJEDKJe", "ADMIN");
 			urepository.save(user1);
