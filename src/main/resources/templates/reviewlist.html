@@ -23,7 +23,10 @@
             <li class="nav-item"><a class="nav-link active" th:href="@{/reviewlist}">Reviews</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{/userprofile}"
                     sec:authorize="isAuthenticated()">Profile</a></li>
-            <form th:action="@{/logout}" method="post">
+            <form th:action="@{/login}" method="post" sec:authorize="isAnonymous()">
+                <input type="submit" value="Sign In" class="btn btn-sm btn-primary" />
+            </form>
+            <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
                 <input type="submit" value="Sign Out" class="btn btn-sm btn-danger" />
             </form>
         </ul>

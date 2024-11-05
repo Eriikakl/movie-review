@@ -25,6 +25,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(antMatcher("/css/**")).permitAll()
+                .requestMatchers(antMatcher("/movielist/**")).permitAll()
+                .requestMatchers(antMatcher("/reviewlist/**")).permitAll()
                 .requestMatchers(toH2Console()).permitAll() // H2-console näkyviin
                 .anyRequest().authenticated())
                 .csrf(csrf -> csrf                                  //
