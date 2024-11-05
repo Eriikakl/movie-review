@@ -9,16 +9,16 @@
 </head>
 
 <body>
-    <h1>User profile</h1>
+    <h1>Hello, <span sec:authentication="name"></span></h1>
     <nav>
-        <ul>
-            <li><a th:href="@{/movielist}">Movies</a></li>
-            <li><a th:href="@{/reviewlist}">Reviews</a></li>
-            <li><a th:href="@{/userprofile}" sec:authorize="isAuthenticated()">Profile</a></li>
+        <ul class="nav nav-tabs">
+            <li class="nav-item"><a class="nav-link" th:href="@{/movielist}">Movies</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/reviewlist}">Reviews</a></li>
+            <li class="nav-item"><a class="nav-link active" th:href="@{/userprofile}" sec:authorize="isAuthenticated()">Profile</a></li>
         </ul>
     </nav>
 
-    <p>Hello, <span sec:authentication="name"></span></p>
+    
 
     <table class="table table-striped">
         <tr>
