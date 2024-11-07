@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -50,6 +51,7 @@ public class MovieRestController {
 
     // New movie
     // http://localhost:8080/api/movies
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/movies")
     public ResponseEntity<Movie> newMovie(@RequestBody Movie movie) {
         try {
@@ -68,6 +70,7 @@ public class MovieRestController {
 
     // Delete movie
     // http://localhost:8080/api/movies/1
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/movies/{id}")
     public ResponseEntity<Void> deleteMovieById(@PathVariable("id") Long id) {
         mrepository.deleteById(id);
@@ -76,6 +79,7 @@ public class MovieRestController {
 
     // Edit movie
     // http://localhost:8080/api/movies/1
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PatchMapping("movies/{id}")
     public ResponseEntity<Movie> editMovie(@PathVariable("id") Long id, @RequestBody Movie editMovie) {
         Optional<Movie> movie = mrepository.findById(id);

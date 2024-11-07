@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -27,6 +28,7 @@ public class UserRestController {
 
     // List of Users
     // http://localhost:8080/api/users
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/users")
     public List<User> getAllUsers() {
         List<User> users = (List<User>) urepository.findAll();
@@ -35,6 +37,7 @@ public class UserRestController {
 
     // Get user by id
     // http://localhost:8080/api/users/1
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") Long userid) {
         Optional<User> user = urepository.findById(userid);
@@ -64,6 +67,7 @@ public class UserRestController {
 
     // Delete user
     // http://localhost:8080/api/users/1
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable("id") Long id) {
         urepository.deleteById(id);
@@ -72,6 +76,7 @@ public class UserRestController {
 
     // Edit User
     // http://localhost:8080/api/users/1
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PatchMapping("users/{id}")
     public ResponseEntity<User> editUser(@PathVariable("id") Long id, @RequestBody User editUser) {
         Optional<User> user = urepository.findById(id);

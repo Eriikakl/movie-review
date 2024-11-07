@@ -28,10 +28,11 @@ public class WebSecurityConfig {
                                 .requestMatchers(antMatcher("/movielist/**")).permitAll()
                                 .requestMatchers(antMatcher("/reviewlist/**")).permitAll()
                                 .requestMatchers(toH2Console()).permitAll() // H2-console näkyviin
-                                .requestMatchers("/api/**").authenticated()
                                 .anyRequest().authenticated())
+                               // .csrf(csrf -> csrf.disable())
                                 .csrf(csrf -> csrf //
-                                                .ignoringRequestMatchers(toH2Console())) //
+                                .ignoringRequestMatchers(toH2Console()) //
+                                .ignoringRequestMatchers("/api/**"))
                                 .headers(headers -> headers //
                                                 .frameOptions(frameoptions -> frameoptions //
                                                                 .disable())) // H2-console näkyviin
@@ -39,10 +40,10 @@ public class WebSecurityConfig {
                                                 .loginPage("/login")
                                                 .defaultSuccessUrl("/movielist", true)
                                                 .permitAll())
-                                .httpBasic(httpBasic -> httpBasic.realmName("moviereview")) // ??
+                                .httpBasic(httpBasic -> httpBasic.realmName("user")) // ??
                                 .logout(logout -> logout
                                                 .permitAll());
-                                
+
                 return http.build();
         }
 

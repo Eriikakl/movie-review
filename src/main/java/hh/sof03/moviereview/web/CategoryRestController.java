@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -44,6 +45,7 @@ public class CategoryRestController {
 
     // New category
     // http://localhost:8080/api/categories
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/categories")
     public ResponseEntity<Category> newCategory(@RequestBody Category category) {
         if (category.getName() == null || category.getName().trim().isEmpty()) {
@@ -55,6 +57,7 @@ public class CategoryRestController {
 
     // Delete category
     // http://localhost:8080/api/categories/1
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/categories/{id}")
     public ResponseEntity<Void> deleteCategoryById(@PathVariable("id") Long id) {
         crepository.deleteById(id);
@@ -63,6 +66,7 @@ public class CategoryRestController {
 
     // Edit Category
     // // http://localhost:8080/api/categories/1
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PatchMapping("/categories/{id}")
     public ResponseEntity<Category> editCategory(@PathVariable("id") Long id, @RequestBody Category editCategory) {
         Optional<Category> category = crepository.findById(id);
