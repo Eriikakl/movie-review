@@ -18,33 +18,36 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+        @Autowired
+        private UserDetailsService userDetailsService;
 
-    @Bean
-    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(antMatcher("/css/**")).permitAll()
-                .requestMatchers(antMatcher("/movielist/**")).permitAll()
-                .requestMatchers(antMatcher("/reviewlist/**")).permitAll()
-                .requestMatchers(toH2Console()).permitAll() // H2-console näkyviin
-                .anyRequest().authenticated())
-                .csrf(csrf -> csrf                                  //
-                        .ignoringRequestMatchers(toH2Console()))    //
-                .headers(headers -> headers                         //
-                        .frameOptions(frameoptions -> frameoptions //
-                                .disable()))                        // H2-console näkyviin
-                .formLogin(formlogin -> formlogin
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/movielist", true)
-                        .permitAll())
-                .logout(logout -> logout
-                        .permitAll());
-        return http.build();
-    }
+        @Bean
+        public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+                http.authorizeHttpRequests(authorize -> authorize
+                                .requestMatchers(antMatcher("/css/**")).permitAll()
+                                .requestMatchers(antMatcher("/movielist/**")).permitAll()
+                                .requestMatchers(antMatcher("/reviewlist/**")).permitAll()
+                                .requestMatchers(toH2Console()).permitAll() // H2-console näkyviin
+                                .requestMatchers("/api/**").authenticated()
+                                .anyRequest().authenticated())
+                                .csrf(csrf -> csrf //
+                                                .ignoringRequestMatchers(toH2Console())) //
+                                .headers(headers -> headers //
+                                                .frameOptions(frameoptions -> frameoptions //
+                                                                .disable())) // H2-console näkyviin
+                                .formLogin(formlogin -> formlogin
+                                                .loginPage("/login")
+                                                .defaultSuccessUrl("/movielist", true)
+                                                .permitAll())
+                                .httpBasic(httpBasic -> httpBasic.realmName("moviereview")) // ??
+                                .logout(logout -> logout
+                                                .permitAll());
+                                
+                return http.build();
+        }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-    }
+        @Autowired
+        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+                auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+        }
 }

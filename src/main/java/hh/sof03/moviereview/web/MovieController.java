@@ -80,7 +80,7 @@ public class MovieController {
     }
 
     // Delete movie
-    // http://localhost:8080/delete/1
+    // http://localhost:8080/deletemovie/1
     @GetMapping("/deletemovie/{id}")
     // @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteMovie(@PathVariable("id") Long movieid, Model model) {
