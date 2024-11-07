@@ -18,6 +18,7 @@ import hh.sof03.moviereview.domain.Category;
 import hh.sof03.moviereview.domain.CategoryRepository;
 import hh.sof03.moviereview.domain.Movie;
 import hh.sof03.moviereview.domain.MovieRepository;
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,7 +54,7 @@ public class MovieRestController {
     // http://localhost:8080/api/movies
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/movies")
-    public ResponseEntity<Movie> newMovie(@RequestBody Movie movie) {
+    public ResponseEntity<Movie> newMovie(@Valid @RequestBody Movie movie) {
         try {
             if (movie.getTitle() == null || movie.getTitle().trim().isEmpty()) {
                 return ResponseEntity.badRequest().build();
@@ -81,7 +82,7 @@ public class MovieRestController {
     // http://localhost:8080/api/movies/1
     @PreAuthorize("hasAuthority('ADMIN')")
     @PatchMapping("movies/{id}")
-    public ResponseEntity<Movie> editMovie(@PathVariable("id") Long id, @RequestBody Movie editMovie) {
+    public ResponseEntity<Movie> editMovie(@PathVariable("id") Long id, @Valid @RequestBody Movie editMovie) {
         Optional<Movie> movie = mrepository.findById(id);
 
         if (movie.isPresent()) {

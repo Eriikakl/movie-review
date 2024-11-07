@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hh.sof03.moviereview.domain.Category;
 import hh.sof03.moviereview.domain.CategoryRepository;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
@@ -47,7 +48,7 @@ public class CategoryRestController {
     // http://localhost:8080/api/categories
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/categories")
-    public ResponseEntity<Category> newCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> newCategory(@Valid @RequestBody Category category) {
         if (category.getName() == null || category.getName().trim().isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
@@ -68,7 +69,7 @@ public class CategoryRestController {
     // // http://localhost:8080/api/categories/1
     @PreAuthorize("hasAuthority('ADMIN')")
     @PatchMapping("/categories/{id}")
-    public ResponseEntity<Category> editCategory(@PathVariable("id") Long id, @RequestBody Category editCategory) {
+    public ResponseEntity<Category> editCategory(@PathVariable("id") Long id, @Valid @RequestBody Category editCategory) {
         Optional<Category> category = crepository.findById(id);
 
         if (category.isPresent()) {

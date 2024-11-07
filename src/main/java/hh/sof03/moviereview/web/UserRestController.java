@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hh.sof03.moviereview.domain.User;
 import hh.sof03.moviereview.domain.UserRepository;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
@@ -48,7 +49,7 @@ public class UserRestController {
     // New user
     // http://localhost:8080/api/users
     @PostMapping("/users")
-    public ResponseEntity<User> newUser(@RequestBody User user) {
+    public ResponseEntity<User> newUser(@Valid @RequestBody User user) {
         if (user.getUsername() == null || user.getUsername().trim().isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
@@ -78,7 +79,7 @@ public class UserRestController {
     // http://localhost:8080/api/users/1
     @PreAuthorize("hasAuthority('ADMIN')")
     @PatchMapping("users/{id}")
-    public ResponseEntity<User> editUser(@PathVariable("id") Long id, @RequestBody User editUser) {
+    public ResponseEntity<User> editUser(@PathVariable("id") Long id, @Valid @RequestBody User editUser) {
         Optional<User> user = urepository.findById(id);
 
         if (user.isPresent()) {

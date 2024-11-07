@@ -13,6 +13,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Movie {
@@ -21,12 +23,15 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long movie_id;
 
+    @NotBlank(message = "Title cannot be blank")
     private String title;
+    @NotBlank(message = "Year cannot be blank")
     private String release_year;
 
+    @NotNull(message = "Category cannot be null")
     @ManyToOne
     @JsonIgnoreProperties("movies")
-    @JoinColumn(name="category_id")
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
@@ -36,14 +41,14 @@ public class Movie {
     // Parameterless constructor
     public Movie() {
     }
-    
+
     // Constructor
     public Movie(String title, String year, Category category) {
         this.title = title;
         this.release_year = year;
         this.category = category;
     }
-    
+
     // Getters and Setters
 
     public long getMovie_id() {
@@ -91,11 +96,5 @@ public class Movie {
     public String toString() {
         return "Movie [title=" + title + ", year=" + release_year + ", category=" + category + "]";
     }
-   
-
-    
-
-    
-    
 
 }

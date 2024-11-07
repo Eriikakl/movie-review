@@ -10,6 +10,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Review {
@@ -18,18 +23,28 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long review_id;
 
+    @NotBlank(message = "Text cannot be blank")
+    @Size(min = 5, max = 150, message = "Text must be between 5 and 150 characters")
     private String text;
+
+    @NotNull(message = "Points cannot be null")
+    @Min(value = 1, message = "Points must be at least 1")
+    @Max(value = 10, message = "Points must be at most 10")
     private Integer points;
-    private LocalDateTime time;
+
     
+    private LocalDateTime time;
+
+    @NotNull(message = "User cannot be null")
     @ManyToOne
     @JsonIgnoreProperties("reviews")
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
+    @NotNull(message = "Movie cannot be null")
     @ManyToOne
     @JsonIgnoreProperties("reviews")
-    @JoinColumn(name="movie_id")
+    @JoinColumn(name = "movie_id")
     private Movie movie;
 
     // Parameterless constructor
@@ -45,7 +60,7 @@ public class Review {
         this.movie = movie;
     }
 
-     // Getters and Setters
+    // Getters and Setters
 
     public long getReview_id() {
         return review_id;
@@ -101,7 +116,5 @@ public class Review {
         return "Review [text=" + text + ", points=" + points + ", time=" + time + ", user=" + user + ", movie=" + movie
                 + "]";
     }
-
-    
 
 }

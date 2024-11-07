@@ -22,6 +22,7 @@ import hh.sof03.moviereview.domain.Review;
 import hh.sof03.moviereview.domain.ReviewRepository;
 import hh.sof03.moviereview.domain.User;
 import hh.sof03.moviereview.domain.UserRepository;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
@@ -56,7 +57,7 @@ public class ReviewRestController {
     // New review
     // http://localhost:8080/api/reviews
     @PostMapping("/reviews")
-    public ResponseEntity<Review> newReview(@RequestBody Review review) {
+    public ResponseEntity<Review> newReview(@Valid @RequestBody Review review) {
 
         try {
             if (review.getText() == null || review.getText().trim().isEmpty()) {
@@ -88,7 +89,7 @@ public class ReviewRestController {
     // Edit review
     // http://localhost:8080/api/reviews/1
     @PatchMapping("reviews/{id}")
-    public ResponseEntity<Review> editReview(@PathVariable("id") Long id, @RequestBody Review editReview) {
+    public ResponseEntity<Review> editReview(@PathVariable("id") Long id, @Valid @RequestBody Review editReview) {
         Optional<Review> review = rrepository.findById(id);
 
         if (review.isPresent()) {

@@ -1,6 +1,7 @@
 package hh.sof03.moviereview.domain;
 
 import java.util.List;
+
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -11,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Category {
@@ -18,7 +20,8 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long category_id;
-    
+
+    @NotBlank(message = "Name cannot be blank")
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
@@ -34,8 +37,8 @@ public class Category {
         this.name = name;
     }
 
-     // Getters and Setters
-     
+    // Getters and Setters
+
     public long getCategory_id() {
         return category_id;
     }
@@ -66,5 +69,4 @@ public class Category {
         return "Category [name=" + name + "]";
     }
 
-    
 }

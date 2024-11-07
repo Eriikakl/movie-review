@@ -12,6 +12,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity(name="users")
 public class User {
@@ -21,12 +23,19 @@ public class User {
     @Column(name = "id", nullable = false, updatable = false)
     private long user_id;
 
+    @NotBlank(message = "Username cannot be blank")
     @Column(name = "username", nullable = false, unique = true)
     private String username;
+
+    @Pattern(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}", message = "Invalid email address")
     @Column(name = "email")
     private String email;
+
+    @NotBlank(message = "Password cannot be blank")
     @Column(name = "password", nullable = false)
     private String password;
+
+    @NotBlank(message = "Role cannot be blank")
     @Column(name = "role", nullable = false)
     private String role;
 
