@@ -49,6 +49,8 @@
             <td th:text="${movie.Category} ? ${movie.Category.name} : '  '"></td>
             <td sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger"
                     th:href="@{/deletemovie/{id}(id=${movie.movie_id})}">Delete</a></td>
+                    <td sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-primary"
+                        th:href="@{/editmovie/{id}(id=${movie.movie_id})}">Edit</a></td>
         </tr>
     </table>
     <a class="btn btn-success" href="/addmovie" sec:authorize="hasAuthority('ADMIN')">Add Movie</a>

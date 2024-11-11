@@ -1,8 +1,6 @@
 package hh.sof03.moviereview.web;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import hh.sof03.moviereview.domain.Movie;
 import hh.sof03.moviereview.domain.MovieRepository;
 import hh.sof03.moviereview.domain.Review;
 import hh.sof03.moviereview.domain.ReviewRepository;
@@ -43,20 +40,34 @@ public class ReviewController {
     // http://localhost:8080/addreview
     @RequestMapping(value = "/addreview")
     public String addReview(Model model) {
-
         model.addAttribute("review", new Review());
-
-        List<Movie> movies = new ArrayList<>();
-        for (Movie movie : mrepository.findAll()) {
-            movies.add(movie);
-        }
-        model.addAttribute("movies", movies);
+        model.addAttribute("movies", mrepository.findAll());
         return "addreview";
     }
 
     // Save new review
     @RequestMapping(value = "/savereview", method = RequestMethod.POST)
     public String saveReview(Review review, Authentication authentication) {
+        review.setTime(LocalDateTime.now());
+        String username = authentication.getName();
+        User user = urepository.findByUsername(username);
+        review.setUser(user);
+        rrepository.save(review);
+        return "redirect:reviewlist";
+    }
+
+    // Edit review
+    @RequestMapping(value = "editreview/{id}")
+    public String editReview(@PathVariable("id") Long reviewid, Model model, Review review,
+            Authentication authentication) {
+        model.addAttribute("review", rrepository.findById(reviewid));
+        model.addAttribute("movies", mrepository.findAll());
+        return "editreview";
+    }
+
+    // Save edited review
+    @RequestMapping(value = "/saveupreview", method = RequestMethod.POST)
+    public String saveUpReview(Review review, Authentication authentication) {
         review.setTime(LocalDateTime.now());
         String username = authentication.getName();
         User user = urepository.findByUsername(username);

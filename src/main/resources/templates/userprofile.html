@@ -47,6 +47,8 @@
             <td th:text="${review.User} ? ${review.User.username} : '  '"></td>
             <td th:if="${review.User.username == username}"><a class="btn btn-danger"
                     th:href="@{/delete/{id}(id=${review.review_id})}">Delete</a></td>
+            <td th:if="${review.User.username == username}"><a class="btn btn-primary"
+                    th:href="@{/editreview/{id}(id=${review.review_id})}">Edit</a></td>
         </tr>
     </table>
 </body>

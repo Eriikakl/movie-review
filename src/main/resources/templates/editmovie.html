@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" 
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Reviews</title>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .add-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .add-title {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2 class="add-title">Edit Movie</h2>
+        <div class="add-container">
+            <form th:object="${movie}" th:action="@{/saveupdated}" action="#" method="post">
+                <input type="hidden" th:field="*{movie_id}" />
+                <label for="name">Title</label>
+                    <input type="text" id="title" th:field="*{title}"><br>
+                <label for="name">Year</label>
+                    <input type="text" id="release_year" th:field="*{release_year}"> <br>
+                <label for="Category">Category</label>
+                    <select th:field="*{category}">
+                        <option 
+                        th:each="category : ${categories}"
+                        th:value="${category.category_id}"
+                        th:text="${category.name}"></option>
+                    </select><br><br>
+                <input type="submit" value="Save">
+                </form>
+        </div>
+    </div>
+   
+    
+</body>
+</html>

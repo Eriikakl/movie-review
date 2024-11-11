@@ -30,9 +30,9 @@
 
 <body>
     <div>
-        <h2 class="add-title">Add Review</h2>
+        <h2 class="add-title">Edit Review</h2>
         <div class="add-container">
-            <form th:object="${review}" th:action="@{/savereview}" action="#" method="post">
+            <form th:object="${review}" th:action="@{/saveupreview}" action="#" method="post">
                 <input type="hidden" th:field="*{review_id}" />
                 <label for="name">Review</label>
                 <input type="text" id="text" th:field="*{text}"><br>
@@ -43,7 +43,6 @@
                     <option th:each="movie : ${movies}" th:value="${movie.movie_id}" th:text="${movie.title}"></option>
                 </select><br><br>
                 <input type="submit" value="Save">
-
             </form>
 
         </div>

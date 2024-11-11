@@ -1,17 +1,12 @@
 package hh.sof03.moviereview.web;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import hh.sof03.moviereview.domain.Category;
 import hh.sof03.moviereview.domain.CategoryRepository;
 import hh.sof03.moviereview.domain.Movie;
 import hh.sof03.moviereview.domain.MovieRepository;
@@ -38,27 +33,16 @@ public class MovieController {
     @GetMapping("/addmovie")
     public String addMovie(Model model) {
         model.addAttribute("movie", new Movie());
-
-        List<Category> categories = new ArrayList<>();
-        for (Category category : crepository.findAll()) {
-            categories.add(category);
-        }
-        model.addAttribute("categories", categories);
+        model.addAttribute("categories", crepository.findAll());
         return "addmovie";
     }
 
-    // Update book
-    // http://localhost:8080/edit/1
-    @PatchMapping("/edit/{id}")
+    // Update movie
+    // http://localhost:8080/editmovie/1
+    @GetMapping("/editmovie/{id}")
     public String editMovie(@PathVariable("id") Long movieid, Model model) {
-        Movie movie = mrepository.findById(movieid).orElse(null);
-        model.addAttribute("movie", movie);
-
-        List<Category> categories = new ArrayList<>();
-        for (Category category : crepository.findAll()) {
-            categories.add(category);
-        }
-        model.addAttribute("categories", categories);
+        model.addAttribute("movie", mrepository.findById(movieid));
+        model.addAttribute("categories", crepository.findAll());
 
         return "editmovie";
     }
@@ -73,7 +57,7 @@ public class MovieController {
 
     // Save updated movie
     // http://localhost:8080/saveupdated
-    @GetMapping("/saveupdated")
+    @PostMapping("/saveupdated")
     public String saveUpdatedMovie(Movie movie) {
         mrepository.save(movie);
         return "redirect:movielist";
